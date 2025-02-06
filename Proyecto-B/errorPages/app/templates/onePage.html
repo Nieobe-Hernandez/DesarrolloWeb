@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="col">
+        <div class="row">
+          <br />
+          <div class="col-6">
+            <h1>Bienvenido a mi One Page</h1>
+            <br />
+            <p>Da un visazo a estas tarjetas!!!</p>
+          </div>
+          <div class="col-6">
+            <img
+              class="img-fluid"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcUMbv4i4OGbQ1RCSKnirDRyCpPJRCpRv0JQ&s"
+              alt="aqui va una imagen"
+            />
+          </div>
+        </div>
+        <div class="row" id="tarjetas">
+          <div class="card col-4">
+            <div class="card-body">
+              <h5 class="card-title">Esta es mi tajetapor defecto</h5>
+              <p class="card-text">
+                Este es mi texto generico Lorem ipsum, dolor sit amet
+                consectetur adipisicing elit. Ex voluptatem praesentium corrupti
+                quam iste! Ipsam sequi enim maiores ipsa aliquam, at delectus in
+                consequatur ullam reiciendis voluptate necessitatibus aut nobis!
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Asperiores, dolore! Optio iure facere, blanditiis, similique
+                doloremque repellat et corrupti cupiditate dignissimos sed
+                ratione tempore facilis vero, nulla quisquam architecto
+                mollitia. Lorem ipsum dolor sit, amet consectetur adipisicing
+                elit. Tempora, modi a at harum eius illo obcaecati quia sequi
+                amet, commodi asperiores, accusantium in repellat deserunt ipsam
+                beatae officia provident rerum.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      //Lógica para la generación de tarjetas
+
+      function loadcards(title, text) {
+          var card = document.createElement('div');
+          card.setAttribute('class','card col-4');
+
+          var body = document.createElement('div');
+          body.setAttribute('class','card-body');
+
+          var h5 = document.createElement('h5');
+          h5.setAttribute('class', 'card-title');
+          h5.innerHTML= title;
+
+          var p = document.createElement('p');
+          p.setAttribute('class', 'card-text');
+          p.innerHTML= text;
+
+          body.appendChild(h5);
+          body.appendChild(p);
+          card.appendChild(body);
+
+          document.getElementById('tarjetas').appendChild(card);
+      }
+
+      var i = 1;
+
+      window.addEventListener('scroll', () => {
+          if ((window.innerHeight + window.scrollY)>= document.body.offsetHeight -10) {
+            
+            for (let index = 0; index < 5; index++) {
+                if(i>100){
+                    break;
+                }
+                var object = {
+                    title: 'Esta es la card: ' + i,
+                    text: 'Este es el tecto generico de la card: '+ i,
+                }
+                loadcards(object.title, object.text);      
+                i++;          
+            }
+            
+          }
+      });
+    </script>
+  </body>
+</html>
