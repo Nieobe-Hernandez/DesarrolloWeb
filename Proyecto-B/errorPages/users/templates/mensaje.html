@@ -12,59 +12,83 @@
   <body>
     <!-- Modal -->
     <div
-      class="modal fade"
-      id="messageModal"
-      tabindex="-1"
-      aria-labelledby="messageModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="messageModalLabel">Mensaje</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <p id="modalMessage"></p>
-            <img id="modalImage" style="display: none" />
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Cerrar
-            </button>
-          </div>
+  class="modal fade"
+  id="messageModal"
+  tabindex="-1"
+  aria-labelledby="messageModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="messageModalLabel">Mensaje</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Cerrar"
+          id="closeModalButton"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p id="modalMessage"></p>
+        <div class="text-center">
+          <img
+            id="modalImage"
+            class="img-fluid"
+            style="display: none"
+            alt="Imagen del mensaje"
+          />
         </div>
       </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          id="closeModalFooterButton"
+        >
+          Cerrar
+        </button>
+      </div>
     </div>
+  </div>
+</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const message = ("{{ message|safe }}"); // El mensaje se pasa desde Django
-        if (message) {
+        const messageData = JSON.parse('{{ message|safe }}');
+    
+        if (messageData && messageData.mensaje) {
           document.getElementById(
             "modalMessage"
-          ).innerText = `[${message.typr.toUpperCase()}] Código ${
-            message.code
-          }: ${message.message}`;
-          if (message.img) {
+          ).innerText = `[${messageData.tipo.toUpperCase()}] Código ${
+            messageData.codigo
+          }: ${messageData.mensaje}`;
+    
+          if (messageData.imagen) {
             const imgElement = document.getElementById("modalImage");
-            imgElement.src = message.img;
+            imgElement.src = messageData.imagen;
             imgElement.style.display = "block";
           }
+    
           const modal = new bootstrap.Modal(
             document.getElementById("messageModal")
           );
           modal.show();
+    
+          // Redirigir al cerrar el modal
+          const redirectToLogin = () => {
+            window.location.href = "{% url 'login' %}";
+          };
+    
+          document
+            .getElementById("closeModalButton")
+            .addEventListener("click", redirectToLogin);
+          document
+            .getElementById("closeModalFooterButton")
+            .addEventListener("click", redirectToLogin);
         }
       });
     </script>

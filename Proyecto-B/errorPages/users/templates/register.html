@@ -1,80 +1,273 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+
     <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+  
+        html,
         body {
-            background-color: #f8f9fa;
-            text-align: center;
-            padding: 50px;
+          height: 100%;
         }
-    </style>
-</head>
-<body>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header text-center">
-                        <h3>Registro de Usuario</h3>
-                    </div>
-                    <div class="card-body">
-                        <form method="post" onsubmit="return validateForm()">
-                            {% csrf_token %}
-                            {{ form.as_p }}
-                            <button type="submit" class="btn btn-primary w-100">Registrarse</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+  
+        body {
+          display: flex;
+          flex-direction: column;
+          font-family: Arial, sans-serif;
+          background-color: #f8f9fa;
+          color: #333;
+        }
+  
+        .container {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+  
+        form {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          margin-top: 20px;
+          width: 50%;
+        }
+  
+        @media (max-width: 768px) {
+          form {
+            width: 100%;
+          }
+        }
+  
+        footer {
+          text-align: center;
+          padding: 10px 0;
+          background-color: #f8f9fa;
+        }
+      </style>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Home</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'register' %}">Register</a>
+              </li>
+            </ul>
+          </div>
         </div>
+      </nav>
+    </header>
+    <div class="container">
+      <h2>Register</h2>
+      <form method="POST" id="register-form">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label for="id_email" class="form-label">Correo Electrónico</label>
+          {{ form.email }} {% if form.email.errors %}
+          <div class="text-danger">{{ form.email.errors.0 }}</div>
+          {% endif %}
+        </div>
+
+        <div class="mb-3">
+          <label for="id_name" class="form-label">Nombre</label>
+          {{ form.name }} {% if form.name.errors %}
+          <div class="text-danger">{{ form.name.errors.0 }}</div>
+          {% endif %}
+        </div>
+
+        <div class="mb-3">
+          <label for="id_surname" class="form-label">Apellido</label>
+          {{ form.surname }} {% if form.surname.errors %}
+          <div class="text-danger">{{ form.surname.errors.0 }}</div>
+          {% endif %}
+        </div>
+
+        <div class="mb-3">
+          <label for="id_control_number" class="form-label"
+            >Número de Control</label
+          >
+          {{ form.control_number }} {% if form.control_number.errors %}
+          <div class="text-danger">{{ form.control_number.errors.0 }}</div>
+          {% endif %}
+        </div>
+
+        <div class="mb-3">
+          <label for="id_age" class="form-label">Edad</label>
+          {{ form.age }} {% if form.age.errors %}
+          <div class="text-danger">{{ form.age.errors.0 }}</div>
+          {% endif %}
+        </div>
+
+        <div class="mb-3">
+          <label for="id_tel" class="form-label">Teléfono</label>
+          {{ form.tel }} {% if form.tel.errors %}
+          <div class="text-danger">{{ form.tel.errors.0 }}</div>
+          {% endif %}
+        </div>
+
+        <label for="id_password1" class="form-label">Contraseña</label>
+        <div class="input-group mb-3">
+          {{ form.password1 }}
+          <button
+            type="button"
+            class="btn btn-outline-secondary toggle-password"
+            data-target="#id_password1"
+          >
+            <img
+              src="https://cdn-icons-png.flaticon.com/128/158/158746.png"
+              class="password-icon"
+              width="24"
+            />
+          </button>
+        </div>
+        {% if form.password1.errors %}
+        <div class="text-danger">{{ form.password1.errors.0 }}</div>
+        {% endif %}
+
+        <label for="id_password2" class="form-label"
+          >Confirmar Contraseña</label
+        >
+        <div class="input-group mb-3">
+          {{ form.password2 }}
+          <button
+            type="button"
+            class="btn btn-outline-secondary toggle-password"
+            data-target="#id_password2"
+          >
+            <img
+              src="https://cdn-icons-png.flaticon.com/128/158/158746.png"
+              class="password-icon"
+              width="24"
+            />
+          </button>
+        </div>
+        {% if form.password2.errors %}
+        <div class="text-danger">{{ form.password2.errors.0 }}</div>
+        {% endif %}
+
+        <button type="submit" class="btn btn-success">Register</button>
+      </form>
     </div>
-    
+
+    <footer>
+      <p>© 2021 Company, Inc.</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        function validateForm(){
-            var pass1 = document.getElementById('id_password1').value;
-            var pass2 = document.getElementById('id_password2').value;
-            var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&]).{8,}$/;
+      $(document).ready(function () {
+        $("#register-form").on("submit", function (event) {
+          var password1 = $("#id_password1").val();
+          var password2 = $("#id_password2").val();
+          var regex = /^(?=.*\d)(?=.*[!#$%&?])(?=.*[a-zA-Z]).{8,}$/;
 
-            if(pass1.length < 8){
-                Swal.fire({
-                    title: 'Error',
-                    text: 'La contraseña debe tener al menos 8 caracteres.',
-                    icon: 'error',
-                    confirmButtonText: 'Aceptar'
-                });
-                return false;
-            }
-
-            if (!regex.test(pass1)) {
-                Swal.fire({
-                    title: 'Error',
-                    text: 'La contraseña debe incluir una mayúscula, un número y un símbolo (!, #, $, %, & o ?).',
-                    icon: 'error',
-                    confirmButtonText: 'Aceptar'
-                });
-                return false;
-            }
-
-            if(pass1 !== pass2){
-                Swal.fire({
-                    title: 'Error',
-                    text: 'Las contraseñas no coinciden.',
-                    icon: 'error',
-                    confirmButtonText: 'Aceptar'
-                });
-                return false;
-            }
-
-            return true;
-        }
+          if (password1 !== password2) {
+            event.preventDefault();
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Las contraseñas no coinciden. Por favor, intenta nuevamente.",
+            });
+            return false;
+          } else if (!regex.test(password1)) {
+            event.preventDefault();
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "La contraseña debe tener al menos 8 caracteres, contener al menos un número, un símbolo (!, #, $, %, & o ?) y una letra.",
+            });
+            return false;
+          }
+          return true;
+        });
+      });
     </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".toggle-password").forEach((button) => {
+          button.addEventListener("click", function () {
+            let input = document.querySelector(
+              this.getAttribute("data-target")
+            );
+            let icon = this.querySelector(".password-icon");
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    {% include 'mensaje.html' %}
-</body>
+            if (input.type === "password") {
+              input.type = "text";
+              icon.src =
+                "https://cdn-icons-png.flaticon.com/128/8173/8173177.png"; // Ícono de "mostrar"
+            } else {
+              input.type = "password";
+              icon.src =
+                "https://cdn-icons-png.flaticon.com/128/158/158746.png"; // Ícono de "ocultar"
+            }
+          });
+        });
+      });
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    {% include 'mensaje.html' %} {% if form.errors %}
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        Swal.fire({
+          icon: "error",
+          title: "Error en el registro",
+          html: "{% for field, errors in form.errors.items %}{% for error in errors %}{{ error }}<br>{% endfor %}{% endfor %}",
+        });
+      });
+    </script>
+    {% endif %}
+    <script>
+      document
+        .getElementById("register-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Detiene el envío para depuración
+          let formData = new FormData(this);
+          for (let pair of formData.entries()) {
+            console.log(pair[0] + ": " + pair[1]); // Muestra cada campo en la consola
+          }
+          this.submit(); // Envía el formulario después de revisar
+        });
+    </script>
+  </body>
 </html>
