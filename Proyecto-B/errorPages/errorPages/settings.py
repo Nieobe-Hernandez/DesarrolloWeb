@@ -45,7 +45,17 @@ INSTALLED_APPS = [
     'categorías',
     'rest_framework',
     'alumnos',
+    'rest_framework_simplejwt',
 ]
+
+#configuracion de AUTH
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+AUTH_USER_MODEL = 'users.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -10,13 +10,71 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <title>Agregar producto</title>
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+            
+        }
+        .page {
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes slide {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .slide {
+            animation: slide 0.5s forwards;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1.0);
+                opacity: 1;
+            }
+        }
+
+        .zoom {
+            animation: zoomIn 0.5s forwards;
+        }
+
+        @keyframes zoomOut {
+            from {
+                transform: scale(1.0);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(0.8);
+                opacity: 1;
+            }
+        }
+
+    </style>
 </head>
 
 <body>
     <div class="container">
         <div class="row vh-100 justify-content-center align-items-center">
-            <div class="col-6 p-5 shadow">
-                <h1 class="text-center">Agregar producto</h1>
+            <div class="col-6 p-5 shadow zoom">
+                <h1 class="text-center slide">Agregar producto</h1>
                 <form method="post">
                     {% csrf_token %} 
                     {{ form.as_p }}
@@ -28,8 +86,7 @@
                         <button class="btn btn-primary mt-4" style="width: 30%;" onclick="window.location.href='/productos/ver/'">Ver productos</button>
                     </div>
                 </form>
-                <p class="text-center mt-3" id="mensaje">
-                     <a href="{% url 'ver' %}">Volver</a></p>
+                
                      
             </div>
             <div class="col-6 p-5 shadow">
@@ -40,7 +97,21 @@
 
             </div>
         </div>
+        <a href="https://www.utez.edu.mx/" class="btn btn-primary">Ir a la página de la UTEZ</a>
     </div>
+    <script> 
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                document.body.style.animation = 'zoomOut 0.5s forwards';
+                setTimeout(() => {
+                    window.location.href = this.href;
+                }, 500)
+            });
+        });
+           
+    
+    </script>
     <script>
         var form = document.getElementById('productoForm');
         form.addEventListener('submit', function(event) {
