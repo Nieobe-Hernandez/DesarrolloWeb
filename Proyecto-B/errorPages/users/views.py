@@ -17,10 +17,10 @@ class UserViewSets(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     
     #definir que metodos se van a proteger
-def get_permissions(self):
-    if self.request.method in  ['POST', 'PUT', 'DELETE']:
-        return [IsAuthenticated()]
-    return []
+    def get_permissions(self):
+        if self.request.method in  ['POST', 'PUT', 'DELETE']:
+            return [IsAuthenticated()]
+        return []
     
 #Hacer una vista que me devuelva mi Token
 from rest_framework_simplejwt.views import TokenObtainPairView
