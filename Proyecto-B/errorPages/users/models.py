@@ -3,7 +3,7 @@ from django.db import models
 from django.utils.timezone import now
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, email, password, name, surname, age, tel, control_number, **extra_fields):
+    def create_user(self, email, password, name, surname, age, tel, control_number, address, **extra_fields):
        if not email:
            raise ValueError('El correo electrónico es obligatorio')
        email = self.normalize_email(email)
@@ -14,6 +14,7 @@ class CustomUserManager(BaseUserManager):
        user.age = age
        user.tel = tel
        user.control_number = control_number
+       user.address = address
        user.save(using=self._db)
        return user
    
@@ -30,6 +31,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
    control_number = models.CharField(max_length=20, unique=True)
    age = models.PositiveIntegerField()
    tel = models.CharField(max_length=15)
+   address = models.CharField(max_length=255, blank=True, null=True)  # Nuevo campo
    join_date = models.DateTimeField(default=now)
    is_active = models.BooleanField(default=True)
    is_staff = models.BooleanField(default=False)
@@ -37,7 +39,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
    objects = CustomUserManager()
    
    USERNAME_FIELD = 'email'
-   REQUIRED_FIELDS = ['name', 'surname', 'control_number', 'age', 'tel']
+   REQUIRED_FIELDS = ['name', 'surname', 'control_number', 'age', 'tel', 'gener']
 
    def __str__(self):
        return self.email
