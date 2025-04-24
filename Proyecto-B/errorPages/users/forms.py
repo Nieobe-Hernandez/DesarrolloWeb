@@ -36,6 +36,7 @@ class CustomUserCreationForm(UserCreationForm):
             "control_number",
             "age",
             "tel",
+            "address",
             "password1",
             "password2",
         ]
@@ -88,6 +89,14 @@ class CustomUserCreationForm(UserCreationForm):
                     "required": True,
                     "placeholder": "Teléfono:",
                     "title": "10 dígitos",
+                }
+            ),
+            "address": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "required": True,
+                    "placeholder": "Dirección:",
+                    "title": "Dirección completa",
                 }
             ),
         }

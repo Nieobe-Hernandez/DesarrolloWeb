@@ -17,7 +17,6 @@ const CustomUserForm = () => {
     age: "",
     tel: "",
     address:"",
-    city: "",
   });
   const nav = useNavigate();
 
@@ -25,7 +24,7 @@ const CustomUserForm = () => {
     axios
       .get("http://127.0.0.1:8000/users/form/")
       .then((response) => {
-        console.log(response.data);
+        console.log("Datos del formulario", response.data);
         setFormFields(response.data);
         setLoading(false);
       })

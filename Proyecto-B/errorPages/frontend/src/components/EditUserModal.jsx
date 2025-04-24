@@ -9,7 +9,8 @@ const EditUserModal = ({ show, onHide, user, onSuccess }) => {
     surname: "",
     control_number: "",
     age: "",
-    tel: ""
+    tel: "",
+    address: ""
   });
   
   const [error, setError] = useState("");
@@ -24,7 +25,8 @@ const EditUserModal = ({ show, onHide, user, onSuccess }) => {
         surname: user.surname || "",
         control_number: user.control_number || "",
         age: user.age || "",
-        tel: user.tel || ""
+        tel: user.tel || "",
+        address: user.address || ""
       });
     }
   }, [user]);
@@ -152,6 +154,20 @@ const EditUserModal = ({ show, onHide, user, onSuccess }) => {
                 required
                 pattern="^[0-9]{10}$"
                 placeholder="Ingrese teléfono"
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Dirección</Form.Label>
+              <Form.Control
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                required
+                minLength={5}
+                maxLength={200}
+                placeholder="Ingrese dirección"
               />
             </Form.Group>
           </Form>
